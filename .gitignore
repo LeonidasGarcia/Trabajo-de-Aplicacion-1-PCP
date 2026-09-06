@@ -1,0 +1,6 @@
+# Artefactos de compilacion Java
+out/
+*.class
+
+# Datos generados
+dataset.dat
