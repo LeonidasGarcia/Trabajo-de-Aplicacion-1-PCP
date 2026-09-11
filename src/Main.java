@@ -20,9 +20,10 @@ public class Main {
         try {
             ParametrosGeneracion generacion = new ParametrosGeneracion(
                     parametros.N(), parametros.n(), parametros.A(), parametros.B());
-            new GeneradorDataset().generar(generacion);
-            System.out.println("dataset.dat generado");
 
+            new GeneradorDataset().generar(generacion);
+
+            System.out.println("dataset.dat generado");
             System.out.println();
 
             ResultadoSerial resultado = new ProcesadorSerial().procesar(parametros.N(), parametros.n());

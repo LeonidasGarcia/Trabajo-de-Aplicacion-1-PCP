@@ -5,15 +5,13 @@ import java.nio.channels.FileChannel;
 
 public class GeneradorDataset {
 
-    public static final String NOMBRE_ARCHIVO = "dataset.dat";
-
     public void generar(ParametrosGeneracion parametros) throws IOException {
         int N = parametros.N();
         int n = parametros.n();
         int A = parametros.A();
         int B = parametros.B();
 
-        try (RandomAccessFile archivo = new RandomAccessFile(NOMBRE_ARCHIVO, "rw")) {
+        try (RandomAccessFile archivo = new RandomAccessFile("dataset.dat", "rw")) {
             archivo.setLength(0);
             FileChannel canal = archivo.getChannel();
             ByteBuffer buffer = ByteBuffer.allocate(1 << 16);
