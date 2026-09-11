@@ -56,7 +56,7 @@ public class AsistenteEntrada {
             if (regla.test(valor)) {
                 return valor;
             }
-            System.err.println(mensajeRegla == null ? "" : mensajeRegla);
+            System.err.println(mensajeRegla);
         }
     }
 }
