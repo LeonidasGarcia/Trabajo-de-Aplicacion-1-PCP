@@ -6,10 +6,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
-        System.setErr(new PrintStream(System.err, true, StandardCharsets.UTF_8));
-
-        Scanner entrada = new Scanner(System.in, StandardCharsets.UTF_8);
+        Scanner entrada = new Scanner(System.in);
+        
         AsistenteEntrada asistente = new AsistenteEntrada(entrada);
         ParametrosEntrada parametros = asistente.ejecutar();
         if (parametros == null) {
