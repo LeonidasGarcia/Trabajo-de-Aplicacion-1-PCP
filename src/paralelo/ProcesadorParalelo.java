@@ -11,7 +11,7 @@ public class ProcesadorParalelo {
         int resto = totalIndices % H;
 
         HiloParalelo[] hilos = new HiloParalelo[H];
-        int comienzo = 0;
+        
 
         // Creación de hilos
         for (int h = 0; h < H; h++) {
@@ -22,7 +22,8 @@ public class ProcesadorParalelo {
             comienzo = fin;
         }
 
-        // Creación física del hilo
+        int comienzo = 0;
+        // Creación física y arranque del hilo
         for (HiloParalelo hilo : hilos) {
             hilo.start();
         }
