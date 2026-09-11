@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.function.IntPredicate;
 
 public class AsistenteEntrada {
 
@@ -11,48 +12,53 @@ public class AsistenteEntrada {
     }
 
     public ParametrosEntrada ejecutar() {
-        Integer N = pedirEntero(ParametroSolicitud.Clave.N, null);
+        Integer N = pedirEntero("N", "Ingrese cantidad de observaciones (N)",
+                v -> v > 1, "Error: Se necesitan al menos 2 puntos para comparar");
         if (N == null) {
             return null;
         }
-        Integer n = pedirEntero(ParametroSolicitud.Clave.n, null);
+        Integer n = pedirEntero("n", "Ingrese cantidad de dimensiones (n)",
+                v -> v >= 1, "Error: La dimension minima es 1");
         if (n == null) {
             return null;
         }
-        Integer A = pedirEntero(ParametroSolicitud.Clave.A, null);
+        Integer A = pedirEntero("A", "Ingrese limite inferior aleatorio (A)",
+                v -> true, null);
         if (A == null) {
             return null;
         }
-        Integer B = pedirEntero(ParametroSolicitud.Clave.B, A);
+        Integer B = pedirEntero("B", "Ingrese limite superior aleatorio (B)",
+                v -> v > A, "Error: El limite superior B debe ser estrictamente mayor que el inferior A");
         if (B == null) {
             return null;
         }
-        Integer H = pedirEntero(ParametroSolicitud.Clave.H, null);
+        Integer H = pedirEntero("H", "Ingrese cantidad de hilos concurrentes (H)",
+                v -> v >= 1, "Error: Debe instanciarse al menos 1 hilo de trabajo");
         if (H == null) {
             return null;
         }
-        ParametrosEntrada parametros = new ParametrosEntrada(N, n, A, B, H);
         System.out.println(MENSAJE_FINAL);
-        return parametros;
+        return new ParametrosEntrada(N, n, A, B, H);
     }
 
-    private Integer pedirEntero(ParametroSolicitud.Clave clave, Integer referencia) {
-        ParametroSolicitud solicitud = ParametroSolicitud.de(clave);
+    private Integer pedirEntero(String clave, String etiqueta, IntPredicate regla, String mensajeRegla) {
         while (true) {
-            System.out.println(solicitud.getEtiqueta());
-            String linea = leerLinea();
-            if (linea == null) {
+            System.out.println(etiqueta);
+            if (!entrada.hasNextLine()) {
                 return null;
             }
-            Validador.Resultado resultado = Validador.validar(solicitud, linea, referencia);
-            if (resultado.getEstado() == Validador.Estado.VALIDO) {
-                return (int) resultado.getValor();
+            String linea = entrada.nextLine();
+            int valor;
+            try {
+                valor = Integer.parseInt(linea.trim());
+            } catch (NumberFormatException e) {
+                System.err.println("Error: Valor no valido para " + clave);
+                continue;
             }
-            System.err.println(solicitud.mensajeError(resultado.getEstado()));
+            if (regla.test(valor)) {
+                return valor;
+            }
+            System.err.println(mensajeRegla == null ? "" : mensajeRegla);
         }
-    }
-
-    private String leerLinea() {
-        return entrada.hasNextLine() ? entrada.nextLine() : null;
     }
 }

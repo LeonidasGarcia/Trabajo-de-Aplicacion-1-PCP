@@ -19,26 +19,26 @@ public class Main {
 
         try {
             ParametrosGeneracion generacion = new ParametrosGeneracion(
-                    parametros.getN(), parametros.getn(), parametros.getA(), parametros.getB());
+                    parametros.N(), parametros.n(), parametros.A(), parametros.B());
             new GeneradorDataset().generar(generacion);
             System.out.println("dataset.dat generado");
 
             System.out.println();
 
-            ResultadoSerial resultado = new ProcesadorSerial().procesar(parametros.getN(), parametros.getn());
+            ResultadoSerial resultado = new ProcesadorSerial().procesar(parametros.N(), parametros.n());
             resultado.imprimirReporte();
 
             System.out.println();
 
             ResultadoParalelo paralelo = new ProcesadorParalelo().procesar(
-                    parametros.getN(), parametros.getn(), parametros.getH());
+                    parametros.N(), parametros.n(), parametros.H());
             paralelo.imprimirReporte();
 
             System.out.println();
 
             ConsolidadorMetricas consolidador = new ConsolidadorMetricas();
-            ResultadoConsolidacion consolidacion = consolidador.consolidar(resultado, paralelo, parametros.getH());
-            consolidador.imprimirReporte(consolidacion, parametros.getH());
+            ResultadoConsolidacion consolidacion = consolidador.consolidar(resultado, paralelo, parametros.H());
+            consolidador.imprimirReporte(consolidacion, parametros.H());
 
             System.out.println();
         } catch (IOException e) {
