@@ -8,10 +8,10 @@ public class GeneradorDataset {
     public static final String NOMBRE_ARCHIVO = "dataset.dat";
 
     public void generar(ParametrosGeneracion parametros) throws IOException {
-        int N = parametros.getN();
-        int n = parametros.getn();
-        int A = parametros.getA();
-        int B = parametros.getB();
+        int N = parametros.N();
+        int n = parametros.n();
+        int A = parametros.A();
+        int B = parametros.B();
 
         try (RandomAccessFile archivo = new RandomAccessFile(NOMBRE_ARCHIVO, "rw")) {
             archivo.setLength(0);
