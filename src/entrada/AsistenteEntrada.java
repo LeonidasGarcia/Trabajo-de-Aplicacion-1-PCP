@@ -3,8 +3,6 @@ import java.util.function.IntPredicate;
 
 public class AsistenteEntrada {
 
-    private static final String MENSAJE_FINAL = "Parametros listos para Generacion y Procesamiento";
-
     private final Scanner entrada;
 
     public AsistenteEntrada(Scanner entrada) {
@@ -37,7 +35,7 @@ public class AsistenteEntrada {
         if (H == null) {
             return null;
         }
-        System.out.println(MENSAJE_FINAL);
+        System.out.println("Parametros listos para Generacion y Procesamiento");
         return new ParametrosEntrada(N, n, A, B, H);
     }
 
