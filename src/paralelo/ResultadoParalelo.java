@@ -7,7 +7,6 @@ public record ResultadoParalelo(Extremos extremos, long tiempoTp, int hilosActiv
         System.out.println("Distancia maxima: " + extremos.distMax()
                 + " (par i=" + extremos.iMax() + ", j=" + extremos.jMax() + ")");
         System.out.println("Hilos activos (con pares evaluados): " + hilosActivos);
-        System.out.println("Tiempo paralelo (Tp): " + tiempoTp
-                + " ns (" + (tiempoTp / 1_000_000_000.0) + " s)");
+        System.out.println("Tiempo paralelo (Tp): " + (tiempoTp / 1_000_000.0) + " ms");
     }
 }

@@ -6,7 +6,6 @@ public record ResultadoSerial(Extremos extremos, long tiempoTs) {
                 + " (par i=" + extremos.iMin() + ", j=" + extremos.jMin() + ")");
         System.out.println("Distancia maxima: " + extremos.distMax()
                 + " (par i=" + extremos.iMax() + ", j=" + extremos.jMax() + ")");
-        System.out.println("Tiempo serial (Ts): " + tiempoTs
-                + " ns (" + (tiempoTs / 1_000_000_000.0) + " s)");
+        System.out.println("Tiempo serial (Ts): " + (tiempoTs / 1_000_000.0) + " ms");
     }
 }

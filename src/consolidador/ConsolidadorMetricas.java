@@ -34,10 +34,10 @@ public class ConsolidadorMetricas {
 
         System.out.println();
         System.out.println("Tabla de tiempos y extremos:");
-        System.out.println("Serial  | Ts = " + s.tiempoTs() + " ns (" + (s.tiempoTs() / 1_000_000_000.0) + " s)"
+        System.out.println("Serial  | Ts = " + (s.tiempoTs() / 1_000_000.0) + " ms"
                 + " | min " + s.extremos().distMin() + " (par i=" + s.extremos().iMin() + ", j=" + s.extremos().jMin() + ")"
                 + " | max " + s.extremos().distMax() + " (par i=" + s.extremos().iMax() + ", j=" + s.extremos().jMax() + ")");
-        System.out.println("Paralelo | Tp = " + p.tiempoTp() + " ns (" + (p.tiempoTp() / 1_000_000_000.0) + " s)"
+        System.out.println("Paralelo | Tp = " + (p.tiempoTp() / 1_000_000.0) + " ms"
                 + " | min " + p.extremos().distMin() + " (par i=" + p.extremos().iMin() + ", j=" + p.extremos().jMin() + ")"
                 + " | max " + p.extremos().distMax() + " (par i=" + p.extremos().iMax() + ", j=" + p.extremos().jMax() + ")");
 
@@ -74,8 +74,8 @@ public class ConsolidadorMetricas {
 
         System.out.println();
         System.out.println("Diagnostico - Serial vs. Paralelo lado a lado:");
-        System.out.println("Tiempo serial (Ts): " + s.tiempoTs() + " ns (" + (s.tiempoTs() / 1_000_000_000.0) + " s)"
-                + "      Tiempo paralelo (Tp): " + p.tiempoTp() + " ns (" + (p.tiempoTp() / 1_000_000_000.0) + " s)");
+        System.out.println("Tiempo serial (Ts): " + (s.tiempoTs() / 1_000_000.0) + " ms"
+                + "      Tiempo paralelo (Tp): " + (p.tiempoTp() / 1_000_000.0) + " ms");
         System.out.println("Distancia minima serial: " + s.extremos().distMin()
                 + " (par i=" + s.extremos().iMin() + ", j=" + s.extremos().jMin() + ")"
                 + "      Distancia minima paralela: " + p.extremos().distMin()
