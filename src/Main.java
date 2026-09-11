@@ -26,11 +26,13 @@ public class Main {
             System.out.println("dataset.dat generado");
             System.out.println();
 
+            // Invocacion del procesamiento serial
             ResultadoSerial resultado = new ProcesadorSerial().procesar(parametros.N(), parametros.n());
             resultado.imprimirReporte();
 
             System.out.println();
 
+            // Invocacion del procesamiento paralelo
             ResultadoParalelo paralelo = new ProcesadorParalelo().procesar(
                     parametros.N(), parametros.n(), parametros.H());
             paralelo.imprimirReporte();
