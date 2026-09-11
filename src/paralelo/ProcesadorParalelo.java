@@ -31,13 +31,8 @@ public class ProcesadorParalelo {
             }
         }
 
-        double distMin = Double.MAX_VALUE;
-        double distMax = -1.0;
-        int iMin = -1;
-        int jMin = -1;
-        int iMax = -1;
-        int jMax = -1;
         int hilosActivos = 0;
+        AcumuladorExtremos extremos = new AcumuladorExtremos();
 
         for (HiloParalelo hilo : hilos) {
             if (hilo.getError() != null) {
@@ -48,21 +43,13 @@ public class ProcesadorParalelo {
                 continue;
             }
             hilosActivos++;
-            if (locales.getDistMin() < distMin) {
-                distMin = locales.getDistMin();
-                iMin = locales.getIndiceIMin();
-                jMin = locales.getIndiceJMin();
-            }
-            if (locales.getDistMax() > distMax) {
-                distMax = locales.getDistMax();
-                iMax = locales.getIndiceIMax();
-                jMax = locales.getIndiceJMax();
-            }
+            extremos.registrar(locales.extremos().distMin(), locales.extremos().iMin(), locales.extremos().jMin());
+            extremos.registrar(locales.extremos().distMax(), locales.extremos().iMax(), locales.extremos().jMax());
         }
 
         long tiempoTp = System.nanoTime() - inicio;
 
-        return new ResultadoParalelo(distMin, distMax, iMin, jMin, iMax, jMax, tiempoTp, hilosActivos);
+        return new ResultadoParalelo(extremos.toExtremos(), tiempoTp, hilosActivos);
     }
 
     public static void main(String[] args) {
@@ -75,14 +62,7 @@ public class ProcesadorParalelo {
             int n = Integer.parseInt(args[1]);
             int H = Integer.parseInt(args[2]);
             ResultadoParalelo resultado = new ProcesadorParalelo().procesar(N, n, H);
-            System.out.println("=== Reporte Paralelo ===");
-            System.out.println("Distancia minima: " + resultado.getDistMin()
-                    + " (par i=" + resultado.getIndiceIMin() + ", j=" + resultado.getIndiceJMin() + ")");
-            System.out.println("Distancia maxima: " + resultado.getDistMax()
-                    + " (par i=" + resultado.getIndiceIMax() + ", j=" + resultado.getIndiceJMax() + ")");
-            System.out.println("Hilos activos (con pares evaluados): " + resultado.getHilosActivos());
-            System.out.println("Tiempo paralelo (Tp): " + resultado.getTiempoTp()
-                    + " ns (" + (resultado.getTiempoTp() / 1_000_000_000.0) + " s)");
+            resultado.imprimirReporte();
         } catch (NumberFormatException e) {
             System.err.println("Error: los argumentos deben ser enteros validos");
         } catch (IOException e) {

@@ -36,76 +36,31 @@ public class Validador {
         }
     }
 
-    public static boolean esEnteroValido(String raw) {
-        if (raw == null) {
-            return false;
-        }
-        String s = raw.trim();
-        return !s.isEmpty() && s.matches("[+-]?\\d+");
-    }
-
     public static Integer comprobarEnteroEnRango(String raw) {
-        if (!esEnteroValido(raw)) {
+        if (raw == null) {
             return null;
         }
         try {
-            return Integer.valueOf(raw.trim());
+            return Integer.parseInt(raw.trim());
         } catch (NumberFormatException e) {
             return null;
         }
     }
 
-    public static Resultado validar(ParametroSolicitud.Clave clave, String raw, Integer valorA) {
-        switch (clave) {
-            case N: {
-                Integer valor = comprobarEnteroEnRango(raw);
-                if (valor == null) {
-                    return Resultado.falloParseo();
-                }
-                if (valor <= 1) {
-                    return Resultado.falloRegla();
-                }
-                return Resultado.ok(valor);
-            }
-            case n: {
-                Integer valor = comprobarEnteroEnRango(raw);
-                if (valor == null) {
-                    return Resultado.falloParseo();
-                }
-                if (valor < 1) {
-                    return Resultado.falloRegla();
-                }
-                return Resultado.ok(valor);
-            }
-            case A: {
-                Integer valor = comprobarEnteroEnRango(raw);
-                if (valor == null) {
-                    return Resultado.falloParseo();
-                }
-                return Resultado.ok(valor);
-            }
-            case B: {
-                Integer valor = comprobarEnteroEnRango(raw);
-                if (valor == null) {
-                    return Resultado.falloParseo();
-                }
-                if (valorA != null && valor <= valorA) {
-                    return Resultado.falloRegla();
-                }
-                return Resultado.ok(valor);
-            }
-            case H: {
-                Integer valor = comprobarEnteroEnRango(raw);
-                if (valor == null) {
-                    return Resultado.falloParseo();
-                }
-                if (valor < 1) {
-                    return Resultado.falloRegla();
-                }
-                return Resultado.ok(valor);
-            }
-            default:
-                throw new IllegalArgumentException("Clave no contemplada: " + clave);
+    public static Resultado validar(ParametroSolicitud solicitud, String raw, Integer valorA) {
+        Integer valor = comprobarEnteroEnRango(raw);
+        if (valor == null) {
+            return Resultado.falloParseo();
         }
+        if (solicitud.getDependeDe() != null) {
+            if (valorA != null && valor <= valorA) {
+                return Resultado.falloRegla();
+            }
+            return Resultado.ok(valor);
+        }
+        if (valor < solicitud.getMinimo()) {
+            return Resultado.falloRegla();
+        }
+        return Resultado.ok(valor);
     }
 }

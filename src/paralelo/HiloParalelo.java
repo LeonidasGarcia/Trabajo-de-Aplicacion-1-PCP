@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 public class HiloParalelo extends Thread {
 
@@ -25,35 +24,25 @@ public class HiloParalelo extends Thread {
         AcumuladorExtremos acumulador = new AcumuladorExtremos();
         long paresEvaluados = 0L;
         try {
-            RandomAccessFile archivo = new RandomAccessFile(GeneradorDataset.NOMBRE_ARCHIVO, "r");
+            LectorDataset lector = new LectorDataset();
             try {
                 int[] puntoI = new int[n];
                 int[] puntoJ = new int[n];
                 for (int i = comienzo; i < fin; i++) {
-                    leerPunto(archivo, i, puntoI);
+                    lector.leerPunto(i, n, W, puntoI);
                     for (int j = i + 1; j < N; j++) {
-                        leerPunto(archivo, j, puntoJ);
+                        lector.leerPunto(j, n, W, puntoJ);
                         acumulador.registrar(Distancia.euclidiana(puntoI, puntoJ), i, j);
                         paresEvaluados++;
                     }
                 }
             } finally {
-                archivo.close();
+                lector.cerrar();
             }
         } catch (IOException e) {
             error = "Error de lectura (" + e.getClass().getSimpleName() + "): " + e.getMessage();
         }
-        extremosLocales = new ExtremosLocales(acumulador.getDistMin(), acumulador.getDistMax(),
-                acumulador.getIndiceIMin(), acumulador.getIndiceJMin(),
-                acumulador.getIndiceIMax(), acumulador.getIndiceJMax(),
-                paresEvaluados);
-    }
-
-    private void leerPunto(RandomAccessFile archivo, int indice, int[] destino) throws IOException {
-        archivo.seek((long) indice * W);
-        for (int d = 0; d < n; d++) {
-            destino[d] = archivo.readInt();
-        }
+        extremosLocales = new ExtremosLocales(acumulador.toExtremos(), paresEvaluados);
     }
 
     public ExtremosLocales getExtremosLocales() {

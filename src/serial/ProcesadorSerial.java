@@ -24,9 +24,7 @@ public class ProcesadorSerial {
         }
         long tiempoTs = System.nanoTime() - inicio;
 
-        return new ResultadoSerial(extremos.getDistMin(), extremos.getDistMax(),
-                extremos.getIndiceIMin(), extremos.getIndiceJMin(),
-                extremos.getIndiceIMax(), extremos.getIndiceJMax(), tiempoTs);
+        return new ResultadoSerial(extremos.toExtremos(), tiempoTs);
     }
 
     public static void main(String[] args) {
@@ -38,13 +36,7 @@ public class ProcesadorSerial {
             int N = Integer.parseInt(args[0]);
             int n = Integer.parseInt(args[1]);
             ResultadoSerial resultado = new ProcesadorSerial().procesar(N, n);
-            System.out.println("=== Reporte Serial ===");
-            System.out.println("Distancia minima: " + resultado.getDistMin()
-                    + " (par i=" + resultado.getIndiceIMin() + ", j=" + resultado.getIndiceJMin() + ")");
-            System.out.println("Distancia maxima: " + resultado.getDistMax()
-                    + " (par i=" + resultado.getIndiceIMax() + ", j=" + resultado.getIndiceJMax() + ")");
-            System.out.println("Tiempo serial (Ts): " + resultado.getTiempoTs()
-                    + " ns (" + (resultado.getTiempoTs() / 1_000_000_000.0) + " s)");
+            resultado.imprimirReporte();
         } catch (NumberFormatException e) {
             System.err.println("Error: los argumentos deben ser enteros validos");
         } catch (IOException e) {

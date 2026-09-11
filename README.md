@@ -14,7 +14,7 @@ consolida las metricas comparativas (speedup, eficiencia y reduccion de tiempo).
 Desde la raiz del proyecto compilar todos los modulos:
 
 ```text
-javac -encoding UTF-8 -d out src/entrada/*.java src/generador/*.java src/serial/*.java src/paralelo/*.java src/consolidador/*.java src/Main.java
+javac -encoding UTF-8 -d out src/entrada/*.java src/generador/*.java src/serial/*.java src/paralelo/*.java src/consolidador/*.java src/comun/*.java src/Main.java
 ```
 
 Los archivos `.class` se generan en el directorio `out/`.

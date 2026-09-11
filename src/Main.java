@@ -27,26 +27,13 @@ public class Main {
             System.out.println();
 
             ResultadoSerial resultado = new ProcesadorSerial().procesar(parametros.getN(), parametros.getn());
-            System.out.println("=== Reporte Serial ===");
-            System.out.println("Distancia minima: " + resultado.getDistMin()
-                    + " (par i=" + resultado.getIndiceIMin() + ", j=" + resultado.getIndiceJMin() + ")");
-            System.out.println("Distancia maxima: " + resultado.getDistMax()
-                    + " (par i=" + resultado.getIndiceIMax() + ", j=" + resultado.getIndiceJMax() + ")");
-            System.out.println("Tiempo serial (Ts): " + resultado.getTiempoTs()
-                    + " ns (" + (resultado.getTiempoTs() / 1_000_000_000.0) + " s)");
+            resultado.imprimirReporte();
 
             System.out.println();
 
             ResultadoParalelo paralelo = new ProcesadorParalelo().procesar(
                     parametros.getN(), parametros.getn(), parametros.getH());
-            System.out.println("=== Reporte Paralelo ===");
-            System.out.println("Distancia minima: " + paralelo.getDistMin()
-                    + " (par i=" + paralelo.getIndiceIMin() + ", j=" + paralelo.getIndiceJMin() + ")");
-            System.out.println("Distancia maxima: " + paralelo.getDistMax()
-                    + " (par i=" + paralelo.getIndiceIMax() + ", j=" + paralelo.getIndiceJMax() + ")");
-            System.out.println("Hilos activos (con pares evaluados): " + paralelo.getHilosActivos());
-            System.out.println("Tiempo paralelo (Tp): " + paralelo.getTiempoTp()
-                    + " ns (" + (paralelo.getTiempoTp() / 1_000_000_000.0) + " s)");
+            paralelo.imprimirReporte();
 
             System.out.println();
 

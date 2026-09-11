@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class AsistenteEntrada {
 
+    private static final String MENSAJE_FINAL = "Parametros listos para Generacion y Procesamiento";
+
     private final Scanner entrada;
 
     public AsistenteEntrada(Scanner entrada) {
@@ -30,7 +32,7 @@ public class AsistenteEntrada {
             return null;
         }
         ParametrosEntrada parametros = new ParametrosEntrada(N, n, A, B, H);
-        System.out.println(Mensajes.MENSAJE_FINAL);
+        System.out.println(MENSAJE_FINAL);
         return parametros;
     }
 
@@ -42,11 +44,11 @@ public class AsistenteEntrada {
             if (linea == null) {
                 return null;
             }
-            Validador.Resultado resultado = Validador.validar(clave, linea, referencia);
+            Validador.Resultado resultado = Validador.validar(solicitud, linea, referencia);
             if (resultado.getEstado() == Validador.Estado.VALIDO) {
                 return (int) resultado.getValor();
             }
-            System.err.println(Mensajes.mensajeError(clave, resultado.getEstado()));
+            System.err.println(solicitud.mensajeError(resultado.getEstado()));
         }
     }
 

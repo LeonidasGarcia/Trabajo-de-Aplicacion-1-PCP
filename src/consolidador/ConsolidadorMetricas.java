@@ -4,15 +4,13 @@ public class ConsolidadorMetricas {
     private static final String ADVERTENCIA = "!ADVERTENCIA: Los resultados no coinciden! Posible condicion de carrera (Race Condition) detectada.";
 
     public ResultadoConsolidacion consolidar(ResultadoSerial serial, ResultadoParalelo paralelo, int H) {
-        double diferenciaMin = Math.abs(serial.getDistMin() - paralelo.getDistMin());
-        double diferenciaMax = Math.abs(serial.getDistMax() - paralelo.getDistMax());
+        double diferenciaMin = Math.abs(serial.extremos().distMin() - paralelo.extremos().distMin());
+        double diferenciaMax = Math.abs(serial.extremos().distMax() - paralelo.extremos().distMax());
         boolean equivalente = diferenciaMin < UMBRAL && diferenciaMax < UMBRAL;
 
-        String estado = equivalente ? ResultadoConsolidacion.CONSISTENTE
-                : ResultadoConsolidacion.DISCREPANCIA_CRITICA;
-        Telemetria telemetria = equivalente ? new Telemetria(serial.getTiempoTs(), paralelo.getTiempoTp(), H) : null;
+        Telemetria telemetria = equivalente ? new Telemetria(serial.tiempoTs(), paralelo.tiempoTp(), H) : null;
 
-        return new ResultadoConsolidacion(estado, serial, paralelo,
+        return new ResultadoConsolidacion(serial, paralelo,
                 diferenciaMin, diferenciaMax, UMBRAL, equivalente, telemetria);
     }
 
@@ -36,12 +34,12 @@ public class ConsolidadorMetricas {
 
         System.out.println();
         System.out.println("Tabla de tiempos y extremos:");
-        System.out.println("Serial  | Ts = " + s.getTiempoTs() + " ns (" + (s.getTiempoTs() / 1_000_000_000.0) + " s)"
-                + " | min " + s.getDistMin() + " (par i=" + s.getIndiceIMin() + ", j=" + s.getIndiceJMin() + ")"
-                + " | max " + s.getDistMax() + " (par i=" + s.getIndiceIMax() + ", j=" + s.getIndiceJMax() + ")");
-        System.out.println("Paralelo | Tp = " + p.getTiempoTp() + " ns (" + (p.getTiempoTp() / 1_000_000_000.0) + " s)"
-                + " | min " + p.getDistMin() + " (par i=" + p.getIndiceIMin() + ", j=" + p.getIndiceJMin() + ")"
-                + " | max " + p.getDistMax() + " (par i=" + p.getIndiceIMax() + ", j=" + p.getIndiceJMax() + ")");
+        System.out.println("Serial  | Ts = " + s.tiempoTs() + " ns (" + (s.tiempoTs() / 1_000_000_000.0) + " s)"
+                + " | min " + s.extremos().distMin() + " (par i=" + s.extremos().iMin() + ", j=" + s.extremos().jMin() + ")"
+                + " | max " + s.extremos().distMax() + " (par i=" + s.extremos().iMax() + ", j=" + s.extremos().jMax() + ")");
+        System.out.println("Paralelo | Tp = " + p.tiempoTp() + " ns (" + (p.tiempoTp() / 1_000_000_000.0) + " s)"
+                + " | min " + p.extremos().distMin() + " (par i=" + p.extremos().iMin() + ", j=" + p.extremos().jMin() + ")"
+                + " | max " + p.extremos().distMax() + " (par i=" + p.extremos().iMax() + ", j=" + p.extremos().jMax() + ")");
 
         System.out.println();
         System.out.println("Telemetria de rendimiento:");
@@ -76,16 +74,16 @@ public class ConsolidadorMetricas {
 
         System.out.println();
         System.out.println("Diagnostico - Serial vs. Paralelo lado a lado:");
-        System.out.println("Tiempo serial (Ts): " + s.getTiempoTs() + " ns (" + (s.getTiempoTs() / 1_000_000_000.0) + " s)"
-                + "      Tiempo paralelo (Tp): " + p.getTiempoTp() + " ns (" + (p.getTiempoTp() / 1_000_000_000.0) + " s)");
-        System.out.println("Distancia minima serial: " + s.getDistMin()
-                + " (par i=" + s.getIndiceIMin() + ", j=" + s.getIndiceJMin() + ")"
-                + "      Distancia minima paralela: " + p.getDistMin()
-                + " (par i=" + p.getIndiceIMin() + ", j=" + p.getIndiceJMin() + ")");
-        System.out.println("Distancia maxima serial: " + s.getDistMax()
-                + " (par i=" + s.getIndiceIMax() + ", j=" + s.getIndiceJMax() + ")"
-                + "      Distancia maxima paralela: " + p.getDistMax()
-                + " (par i=" + p.getIndiceIMax() + ", j=" + p.getIndiceJMax() + ")");
+        System.out.println("Tiempo serial (Ts): " + s.tiempoTs() + " ns (" + (s.tiempoTs() / 1_000_000_000.0) + " s)"
+                + "      Tiempo paralelo (Tp): " + p.tiempoTp() + " ns (" + (p.tiempoTp() / 1_000_000_000.0) + " s)");
+        System.out.println("Distancia minima serial: " + s.extremos().distMin()
+                + " (par i=" + s.extremos().iMin() + ", j=" + s.extremos().jMin() + ")"
+                + "      Distancia minima paralela: " + p.extremos().distMin()
+                + " (par i=" + p.extremos().iMin() + ", j=" + p.extremos().jMin() + ")");
+        System.out.println("Distancia maxima serial: " + s.extremos().distMax()
+                + " (par i=" + s.extremos().iMax() + ", j=" + s.extremos().jMax() + ")"
+                + "      Distancia maxima paralela: " + p.extremos().distMax()
+                + " (par i=" + p.extremos().iMax() + ", j=" + p.extremos().jMax() + ")");
 
         System.out.println();
         System.out.println("La telemetria de rendimiento NO es valida: los resultados de las vias no coinciden.");

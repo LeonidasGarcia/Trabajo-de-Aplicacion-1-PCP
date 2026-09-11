@@ -1,48 +1,12 @@
-public final class ResultadoSerial {
+public record ResultadoSerial(Extremos extremos, long tiempoTs) {
 
-    private final double distMin;
-    private final double distMax;
-    private final int iMin;
-    private final int jMin;
-    private final int iMax;
-    private final int jMax;
-    private final long tiempoTs;
-
-    public ResultadoSerial(double distMin, double distMax, int iMin, int jMin, int iMax, int jMax, long tiempoTs) {
-        this.distMin = distMin;
-        this.distMax = distMax;
-        this.iMin = iMin;
-        this.jMin = jMin;
-        this.iMax = iMax;
-        this.jMax = jMax;
-        this.tiempoTs = tiempoTs;
-    }
-
-    public double getDistMin() {
-        return distMin;
-    }
-
-    public double getDistMax() {
-        return distMax;
-    }
-
-    public int getIndiceIMin() {
-        return iMin;
-    }
-
-    public int getIndiceJMin() {
-        return jMin;
-    }
-
-    public int getIndiceIMax() {
-        return iMax;
-    }
-
-    public int getIndiceJMax() {
-        return jMax;
-    }
-
-    public long getTiempoTs() {
-        return tiempoTs;
+    public void imprimirReporte() {
+        System.out.println("=== Reporte Serial ===");
+        System.out.println("Distancia minima: " + extremos.distMin()
+                + " (par i=" + extremos.iMin() + ", j=" + extremos.jMin() + ")");
+        System.out.println("Distancia maxima: " + extremos.distMax()
+                + " (par i=" + extremos.iMax() + ", j=" + extremos.jMax() + ")");
+        System.out.println("Tiempo serial (Ts): " + tiempoTs
+                + " ns (" + (tiempoTs / 1_000_000_000.0) + " s)");
     }
 }

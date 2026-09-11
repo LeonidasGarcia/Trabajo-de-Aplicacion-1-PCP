@@ -20,27 +20,7 @@ public final class AcumuladorExtremos {
         }
     }
 
-    public double getDistMin() {
-        return distMin;
-    }
-
-    public double getDistMax() {
-        return distMax;
-    }
-
-    public int getIndiceIMin() {
-        return iMin;
-    }
-
-    public int getIndiceJMin() {
-        return jMin;
-    }
-
-    public int getIndiceIMax() {
-        return iMax;
-    }
-
-    public int getIndiceJMax() {
-        return jMax;
+    public Extremos toExtremos() {
+        return new Extremos(distMin, iMin, jMin, distMax, iMax, jMax);
     }
 }
