@@ -51,22 +51,4 @@ public class ProcesadorParalelo {
 
         return new ResultadoParalelo(extremos.toExtremos(), tiempoTp, hilosActivos);
     }
-
-    public static void main(String[] args) {
-        if (args.length != 3) {
-            System.err.println("Uso: ProcesadorParalelo <N> <n> <H>");
-            return;
-        }
-        try {
-            int N = Integer.parseInt(args[0]);
-            int n = Integer.parseInt(args[1]);
-            int H = Integer.parseInt(args[2]);
-            ResultadoParalelo resultado = new ProcesadorParalelo().procesar(N, n, H);
-            resultado.imprimirReporte();
-        } catch (NumberFormatException e) {
-            System.err.println("Error: los argumentos deben ser enteros validos");
-        } catch (IOException e) {
-            System.err.println("Error al leer dataset.dat: " + e.getMessage());
-        }
-    }
 }

@@ -11,7 +11,7 @@ public class ConsolidadorMetricas {
         Telemetria telemetria = equivalente ? new Telemetria(serial.tiempoTs(), paralelo.tiempoTp(), H) : null;
 
         return new ResultadoConsolidacion(serial, paralelo,
-                diferenciaMin, diferenciaMax, UMBRAL, equivalente, telemetria);
+                diferenciaMin, diferenciaMax, equivalente, telemetria);
     }
 
     public void imprimirReporte(ResultadoConsolidacion resultado, int H) {

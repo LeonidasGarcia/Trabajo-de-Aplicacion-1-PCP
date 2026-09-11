@@ -33,26 +33,4 @@ public class GeneradorDataset {
             }
         }
     }
-
-    public static void main(String[] args) {
-        if (args.length != 4) {
-            System.err.println("Uso: GeneradorDataset <N> <n> <A> <B>");
-            return;
-        }
-        try {
-            int N = Integer.parseInt(args[0]);
-            int n = Integer.parseInt(args[1]);
-            int A = Integer.parseInt(args[2]);
-            int B = Integer.parseInt(args[3]);
-            ParametrosGeneracion parametros = new ParametrosGeneracion(N, n, A, B);
-            new GeneradorDataset().generar(parametros);
-        } catch (NumberFormatException e) {
-            System.err.println("Error: los argumentos deben ser enteros validos");
-            return;
-        } catch (IOException e) {
-            System.err.println("Error al generar dataset.dat: " + e.getMessage());
-            return;
-        }
-        System.out.println("dataset.dat generado");
-    }
 }

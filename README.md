@@ -19,6 +19,10 @@ javac -encoding UTF-8 -d out src/entrada/*.java src/generador/*.java src/serial/
 
 Los archivos `.class` se generan en el directorio `out/`.
 
+> Nota: si la maquina esta al limite de memoria paginada, el JVM puede fallar al
+> reservar espacio. En ese caso acotar el heap del compilador:
+> `javac -J-XX:+UseSerialGC -J-Xmx96m -encoding UTF-8 -d out <archivos>`.
+
 ## Ejecucion
 
 Con el programa compilado, ejecutar el flujo completo:
@@ -26,6 +30,9 @@ Con el programa compilado, ejecutar el flujo completo:
 ```text
 java -cp out Main
 ```
+
+> Si hay limitacion de memoria, ejecutar como:
+> `java -Xms16m -Xmx48m -XX:+UseSerialGC -cp out Main`.
 
 El programa pedira por terminal los siguientes parametros:
 

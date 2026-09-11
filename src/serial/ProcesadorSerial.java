@@ -26,21 +26,4 @@ public class ProcesadorSerial {
 
         return new ResultadoSerial(extremos.toExtremos(), tiempoTs);
     }
-
-    public static void main(String[] args) {
-        if (args.length != 2) {
-            System.err.println("Uso: ProcesadorSerial <N> <n>");
-            return;
-        }
-        try {
-            int N = Integer.parseInt(args[0]);
-            int n = Integer.parseInt(args[1]);
-            ResultadoSerial resultado = new ProcesadorSerial().procesar(N, n);
-            resultado.imprimirReporte();
-        } catch (NumberFormatException e) {
-            System.err.println("Error: los argumentos deben ser enteros validos");
-        } catch (IOException e) {
-            System.err.println("Error al leer dataset.dat: " + e.getMessage());
-        }
-    }
 }
