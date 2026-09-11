@@ -6,8 +6,10 @@ public class ProcesadorSerial {
         AcumuladorExtremos extremos = new AcumuladorExtremos();
 
         int W = n * 4;
-        long inicio = 0L;
         LectorDataset lector = new LectorDataset();
+
+        long inicio = 0L;
+
         try {
             int[] puntoI = new int[n];
             int[] puntoJ = new int[n];
@@ -22,6 +24,7 @@ public class ProcesadorSerial {
         } finally {
             lector.cerrar();
         }
+        
         long tiempoTs = System.nanoTime() - inicio;
 
         return new ResultadoSerial(extremos.toExtremos(), tiempoTs);
