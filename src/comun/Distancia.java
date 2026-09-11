@@ -1,8 +1,4 @@
 public final class Distancia {
-
-    private Distancia() {
-    }
-
     public static double euclidiana(int[] puntoI, int[] puntoJ) {
         double suma = 0.0;
         for (int k = 0; k < puntoI.length; k++) {

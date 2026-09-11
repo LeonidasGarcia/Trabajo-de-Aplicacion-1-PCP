@@ -1,7 +1,7 @@
 public final class AcumuladorExtremos {
 
     private double distMin = Double.MAX_VALUE;
-    private double distMax = -1.0;
+    private double distMax = Double.MIN_VALUE;
     private int iMin = -1;
     private int jMin = -1;
     private int iMax = -1;
