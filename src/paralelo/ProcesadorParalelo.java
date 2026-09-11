@@ -3,8 +3,6 @@ import java.io.IOException;
 public class ProcesadorParalelo {
 
     public ResultadoParalelo procesar(int N, int n, int H) throws IOException {
-        long inicio = System.nanoTime();
-
         int W = n * 4;
         int totalIndices = N - 1;
         int base = totalIndices / H;
@@ -12,6 +10,7 @@ public class ProcesadorParalelo {
 
         HiloParalelo[] hilos = new HiloParalelo[H];
         
+        int comienzo = 0;
 
         // Creación de hilos
         for (int h = 0; h < H; h++) {
@@ -22,12 +21,15 @@ public class ProcesadorParalelo {
             comienzo = fin;
         }
 
-        int comienzo = 0;
+        long inicio = System.nanoTime();
+        
         // Creación física y arranque del hilo
         for (HiloParalelo hilo : hilos) {
+            // Ejecuta run en el hilo
             hilo.start();
         }
 
+        // Bloquea el hilo principal (main) hasta que todos los hilos terminen
         for (HiloParalelo hilo : hilos) {
             try {
                 hilo.join();
@@ -38,17 +40,23 @@ public class ProcesadorParalelo {
         }
 
         int hilosActivos = 0;
+
         AcumuladorExtremos extremos = new AcumuladorExtremos();
 
         for (HiloParalelo hilo : hilos) {
             if (hilo.getError() != null) {
                 throw new IOException("Error en hilo de trabajo: " + hilo.getError());
             }
+
             ExtremosLocales locales = hilo.getExtremosLocales();
+
+            // Si el hilo no evaluó ningun par, se descarta del resultado (Sucede cuando H > N)
             if (!locales.tienePares()) {
                 continue;
             }
+
             hilosActivos++;
+
             extremos.registrar(locales.extremos().distMin(), locales.extremos().iMin(), locales.extremos().jMin());
             extremos.registrar(locales.extremos().distMax(), locales.extremos().iMax(), locales.extremos().jMax());
         }
