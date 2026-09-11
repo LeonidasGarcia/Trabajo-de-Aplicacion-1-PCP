@@ -27,8 +27,8 @@ public class Main {
             System.out.println();
 
             // Invocacion del procesamiento serial
-            ResultadoSerial resultado = new ProcesadorSerial().procesar(parametros.N(), parametros.n());
-            resultado.imprimirReporte();
+            ResultadoSerial serial = new ProcesadorSerial().procesar(parametros.N(), parametros.n());
+            serial.imprimirReporte();
 
             System.out.println();
 
@@ -40,7 +40,7 @@ public class Main {
             System.out.println();
 
             ConsolidadorMetricas consolidador = new ConsolidadorMetricas();
-            ResultadoConsolidacion consolidacion = consolidador.consolidar(resultado, paralelo, parametros.H());
+            ResultadoConsolidacion consolidacion = consolidador.consolidar(serial, paralelo, parametros.H());
             consolidador.imprimirReporte(consolidacion, parametros.H());
 
             System.out.println();

@@ -22,7 +22,7 @@ public class ProcesadorParalelo {
         }
 
         long inicio = System.nanoTime();
-        
+
         // Creación física y arranque del hilo
         for (HiloParalelo hilo : hilos) {
             // Ejecuta run en el hilo
@@ -38,6 +38,8 @@ public class ProcesadorParalelo {
                 throw new IOException("Interrumpido: " + e.getMessage());
             }
         }
+
+        long tiempoTp = System.nanoTime() - inicio;
 
         int hilosActivos = 0;
 
@@ -60,8 +62,6 @@ public class ProcesadorParalelo {
             extremos.registrar(locales.extremos().distMin(), locales.extremos().iMin(), locales.extremos().jMin());
             extremos.registrar(locales.extremos().distMax(), locales.extremos().iMax(), locales.extremos().jMax());
         }
-
-        long tiempoTp = System.nanoTime() - inicio;
 
         return new ResultadoParalelo(extremos.toExtremos(), tiempoTp, hilosActivos);
     }
